@@ -1,0 +1,24 @@
+server:
+  port: ${PORT:9002}
+  servlet:
+    context-path: /camp
+jwt:
+  secret: ${SECRET:3A8BFDDEA9AFA32F0E711CCC109D3D4EF50F9D49B134C49F7005E1C4D3D801C5}
+  expiration: ${EXPIRATION:3600000} # 1 hour
+spring:
+  application:
+    name: user-service
+  data:
+    mongodb:
+      uri: ${DBURI:mongodb+srv://serverconnection:<password>@mflix-jho7e.mongodb.net/test?retryWrites=true&w=majority}
+      database: ${DB:dev}
+logging:
+  level:
+    root: INFO
+    api.user.management: DEBUG
+    org.springframework.web: INFO
+    org.springframework.security: INFO
+    org.springframework.data: INFO
+    org.springframework.boot.autoconfigure.mongo: INFO
+    org.springframework.boot.autoconfigure.data.mongo: INFO
+    org.springframework.data.mongodb.core.MongoTemplate: INFO
