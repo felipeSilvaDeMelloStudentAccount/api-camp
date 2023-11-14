@@ -43,14 +43,30 @@ message will be provided. For example:
 
 ```json
 {
-  "name": "Campsite Name",
+  "name": "Example Campsite",
   "images": [
-    "base64_image_1",
-    "base64_image_2"
+    "image1.jpg",
+    "image2.jpg"
   ],
-  "description": "Campsite Description",
-  "location": "Campsite Location",
-  "ratings": 4.5
+  "description": "A beautiful campsite in a serene location.",
+  "rating": 4,
+  "addressDetails": {
+    "addressLine1": "123 Main Street",
+    "addressLine2": "Apt 4B",
+    "addressLine3": null,
+    "addressLine4": null,
+    "addressLine5": null,
+    "country": "Example Country",
+    "eirCode": "E12345",
+    "geoLocation": {
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  },
+  "createdBy": {
+    "username": "john_doe",
+    "userId": "123456"
+  }
 }
 ```
 
@@ -65,7 +81,7 @@ message will be provided. For example:
     "base64_image_2"
   ],
   "description": "Campsite Description",
-  "location": "Campsite Location",
+  "location": "Campsite GeoLocation",
   "ratings": 4.5
 }
 ```
@@ -85,7 +101,7 @@ message will be provided. For example:
     "base64_image_2"
   ],
   "description": "Campsite Description",
-  "location": "Campsite Location",
+  "location": "Campsite GeoLocation",
   "ratings": 4.5
 }
 ```
@@ -104,7 +120,7 @@ message will be provided. For example:
     "updated_base64_image_2"
   ],
   "description": "Updated Campsite Description",
-  "location": "Updated Campsite Location",
+  "location": "Updated Campsite GeoLocation",
   "ratings": 4.8
 }
 ```
@@ -120,7 +136,7 @@ message will be provided. For example:
     "updated_base64_image_2"
   ],
   "description": "Updated Campsite Description",
-  "location": "Updated Campsite Location",
+  "location": "Updated Campsite GeoLocation",
   "ratings": 4.8
 }
 ```
@@ -160,7 +176,7 @@ message will be provided. For example:
       "base64_image_2"
     ],
     "description": "Campsite Description",
-    "location": "Campsite Location",
+    "location": "Campsite GeoLocation",
     "ratings": 4.5
   },
   {
@@ -171,7 +187,7 @@ message will be provided. For example:
       "other_base64_image_2"
     ],
     "description": "Another Campsite Description",
-    "location": "Different Location",
+    "location": "Different GeoLocation",
     "ratings": 4.2
   }
 ]

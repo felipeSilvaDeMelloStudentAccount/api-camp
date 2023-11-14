@@ -1,20 +1,22 @@
 package api.camp.controller;
 
+import api.camp.model.CampsiteDTO;
 import api.camp.model.Error;
-import api.camp.model.collection.Campsite;
+import api.camp.service.CampSiteService;
 import api.camp.service.JwtTokenService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.validation.Valid;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PatchMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -27,18 +29,21 @@ import org.springframework.web.bind.annotation.RestController;
 @CrossOrigin(origins = "http://localhost:3000")
 public class CampSiteController {
 
+  private CampSiteService campSiteService;
   private JwtTokenService jwtTokenService;
   private ObjectMapper mapper;
 
+
+  @PostMapping()
   public ResponseEntity<String> createCamp(
       @RequestHeader("Authorization") String authorizationHeader,
-      @Validated @RequestBody Campsite campsite)
+      @Valid @RequestBody CampsiteDTO campsite)
       throws JsonProcessingException {
+    log.info("createCamp controller");
     if (!jwtTokenService.isValidToken(authorizationHeader)) {
       return invalidToken();
     }
-    log.info("createCamp controller");
-    return null;
+    return campSiteService.createCamp(campsite);
   }
 
   @GetMapping("/{campsiteid}")
@@ -55,7 +60,7 @@ public class CampSiteController {
   @PatchMapping("/{campsiteid}")
   public ResponseEntity<String> updateCamp(
       @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsiteid,
-      @RequestBody Campsite campsite) throws JsonProcessingException {
+      @RequestBody CampsiteDTO campsiteDTO) throws JsonProcessingException {
     log.info("updateCamp controller");
     if (!jwtTokenService.isValidToken(authorizationHeader)) {
       return invalidToken();

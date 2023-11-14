@@ -18,7 +18,7 @@ public class JwtTokenService {
       SignedJWT signedJWT = SignedJWT.parse(jwtToken);
       JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
       String userid = claims.getSubject();
-      //Only allow the user to access their own data
+      // Only allow the user to access their own data
       if (claims.getExpirationTime().before(new Date())) {
         log.debug("JWT token expired for user {}", userid);
         return false;

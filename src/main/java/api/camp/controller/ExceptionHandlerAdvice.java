@@ -9,12 +9,16 @@ import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
-@org.springframework.web.bind.annotation.ControllerAdvice
+@ControllerAdvice
 @AllArgsConstructor
-public class ControllerAdvice {
+public class ExceptionHandlerAdvice {
 
   private ObjectMapper objectMapper;
 
@@ -36,5 +40,18 @@ public class ControllerAdvice {
     // You can customize the response for specific exception types.
     return ResponseEntity.status(HttpStatus.NOT_FOUND)
         .body("Resource not found: " + ex.getMessage());
+  }
+
+  @ExceptionHandler(MethodArgumentNotValidException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public ResponseEntity<String> handleValidationException(MethodArgumentNotValidException ex) {
+    // Extract the error message from the first validation error
+    FieldError fieldError = ex.getBindingResult().getFieldError();
+    String errorMessage = "Invalid Request";
+    if (fieldError != null) {
+      errorMessage = fieldError.getDefaultMessage();
+    }
+
+    return new ResponseEntity<>(errorMessage, HttpStatus.BAD_REQUEST);
   }
 }
