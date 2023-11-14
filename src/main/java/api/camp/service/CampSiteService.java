@@ -41,11 +41,10 @@ public class CampSiteService {
     return ResponseEntity.ok("Campsite created successfully");
   }
 
-  public ResponseEntity<List<Campsite>> getAllCampsites() {
+  public List<Campsite> getAllCampsites() {
     log.info("getAllCampsites service");
     Sort sort = Sort.by(Sort.Order.asc("createdDate"));
-    List<Campsite> campsites = campsiteRepository.findAllOrderByCreatedDate(sort);
-    return ResponseEntity.ok(campsites);
+    return campsiteRepository.findAllOrderByCreatedDate(sort);
   }
 
 

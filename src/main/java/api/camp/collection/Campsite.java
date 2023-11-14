@@ -3,6 +3,7 @@ package api.camp.collection;
 
 import api.camp.model.Address;
 import api.camp.model.Author;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.validation.constraints.Max;
@@ -25,6 +26,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 public class Campsite {
 
   @Id
+  @JsonIgnore
   private String id;
   @NotBlank(message = "Name cannot be blank")
   private String name;

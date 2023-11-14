@@ -1,15 +1,17 @@
 package api.camp.controller;
 
+import static api.camp.service.JwtTokenService.validateToken;
+
+import api.camp.collection.Campsite;
 import api.camp.model.CampsiteDTO;
-import api.camp.model.Error;
 import api.camp.service.CampSiteService;
 import api.camp.service.JwtTokenService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -37,56 +39,45 @@ public class CampSiteController {
   @PostMapping()
   public ResponseEntity<String> createCamp(
       @RequestHeader("Authorization") String authorizationHeader,
-      @Valid @RequestBody CampsiteDTO campsite)
-      throws JsonProcessingException {
+      @Valid @RequestBody CampsiteDTO campsite) {
     log.info("createCamp controller");
-    if (!jwtTokenService.isValidToken(authorizationHeader)) {
-      return invalidToken();
-    }
+    validateToken(authorizationHeader);
     return campSiteService.createCamp(campsite);
   }
 
-  @GetMapping("/{campsiteid}")
-  public ResponseEntity<String> getCamp(@RequestHeader("Authorization") String authorizationHeader,
-      @PathVariable String campsiteid) throws JsonProcessingException {
+  @GetMapping
+  public List<Campsite> getAllCamps(@RequestHeader("Authorization") String authorizationHeader) {
     log.info("getCamp controller");
-    if (!jwtTokenService.isValidToken(authorizationHeader)) {
-      return invalidToken();
-    }
+    validateToken(authorizationHeader);
+    return campSiteService.getAllCampsites();
+  }
+
+  @GetMapping("/{campsite}")
+  public ResponseEntity<String> getCamp(@RequestHeader("Authorization") String authorizationHeader,
+      @PathVariable String campsite) throws JsonProcessingException {
+    log.info("getCamp controller");
+    validateToken(authorizationHeader);
     return null;
   }
 
 
-  @PatchMapping("/{campsiteid}")
+  @PatchMapping("/{campsite}")
   public ResponseEntity<String> updateCamp(
-      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsiteid,
+      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsite,
       @RequestBody CampsiteDTO campsiteDTO) throws JsonProcessingException {
     log.info("updateCamp controller");
-    if (!jwtTokenService.isValidToken(authorizationHeader)) {
-      return invalidToken();
-    }
+    validateToken(authorizationHeader);
     return null;
   }
 
-  @DeleteMapping("/{campsiteid}")
+  @DeleteMapping("/{campsite}")
   public ResponseEntity<String> deleteCamp(
-      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsiteid)
+      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsite)
       throws JsonProcessingException {
     log.info("deleteCamp controller");
-    if (!jwtTokenService.isValidToken(authorizationHeader)) {
-      return invalidToken();
-    }
-    return null;
-  }
+    validateToken(authorizationHeader);
 
-  private ResponseEntity<String> invalidToken() throws JsonProcessingException {
-    Error error
-        = Error.builder()
-        .cause("JwtToken")
-        .message("Invalid JwtToken")
-        .build();
-    return ResponseEntity.status(HttpStatus.UNAUTHORIZED)
-        .body(mapper.writeValueAsString(error));
+    return null;
   }
 
 }

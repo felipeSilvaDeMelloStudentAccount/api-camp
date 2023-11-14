@@ -71,20 +71,7 @@ message will be provided. For example:
 ```
 
 **Response:**
-
-```json
-{
-  "id": 123,
-  "name": "Campsite Name",
-  "images": [
-    "base64_image_1",
-    "base64_image_2"
-  ],
-  "description": "Campsite Description",
-  "location": "Campsite GeoLocation",
-  "ratings": 4.5
-}
-```
+201
 
 ### 2. Read Campsite
 
@@ -94,15 +81,29 @@ message will be provided. For example:
 
 ```json
 {
-  "id": 123,
-  "name": "Campsite Name",
+  "name": "Example Campsite",
   "images": [
-    "base64_image_1",
-    "base64_image_2"
+    "image1.jpg",
+    "image2.jpg"
   ],
-  "description": "Campsite Description",
-  "location": "Campsite GeoLocation",
-  "ratings": 4.5
+  "description": "A beautiful campsite in a serene location.",
+  "rating": 4,
+  "addressDetails": {
+    "addressLine1": "123 Main Street",
+    "addressLine2": "Apt 4B",
+    "addressLine3": null,
+    "addressLine4": null,
+    "addressLine5": null,
+    "country": "Example Country",
+    "eirCode": "E12345",
+    "geoLocation": {
+      "latitude": 40.7128,
+      "longitude": -74.0060
+    }
+  },
+  "createdBy": {
+    "username": "john_doe"
+  }
 }
 ```
 
