@@ -7,10 +7,9 @@ import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
 
-@Builder
 @Getter
+@Builder
 @Setter
-@AllArgsConstructor
 @JsonSerialize
 @JsonDeserialize
 public class Error {

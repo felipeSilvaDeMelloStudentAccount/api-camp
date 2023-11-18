@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.net.URI;
 import java.util.List;
 
 
@@ -26,27 +26,24 @@ public class CampSiteService {
     //return a 400 if the campsite already exists or if the campsite is not within the boundaries of the location
     public ResponseEntity<String> createCamp(CampsiteDTO campsiteDTO) {
         log.info("createCamp service");
-
-        //map campsiteDTO to campsite
         Campsite campsite = Campsite.builder()
                 .name(campsiteDTO.getName())
                 .images(campsiteDTO.getImages())
                 .description(campsiteDTO.getDescription())
                 .rating(campsiteDTO.getRating())
-                .createdDate(LocalDateTime.now())
                 .addressDetails(campsiteDTO.getAddressDetails())
                 .author(campsiteDTO.getAuthor())
                 .build();
-        log.info("campsite: {}", campsite);
+        log.info("campsite collection: {}", campsite.toString());
         campsiteRepository.save(campsite);
         log.info("campsite saved successfully");
-        return ResponseEntity.ok("Campsite created successfully");
+        return ResponseEntity.created(URI.create("/v1/campsites/" + campsite.getId())).build();
     }
 
     public List<Campsite> getAllCampsites() {
         log.info("getAllCampsites service");
         Sort sort = Sort.by(Sort.Order.asc("createdDate"));
-        return campsiteRepository.findAllOrderByCreatedDate(sort);
+        return campsiteRepository.findAll(sort);
     }
 
 

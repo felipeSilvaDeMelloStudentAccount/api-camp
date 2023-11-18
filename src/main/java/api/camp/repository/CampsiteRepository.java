@@ -9,7 +9,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CampsiteRepository extends MongoRepository<Campsite, String> {
 
-  List<Campsite> findAllOrderByCreatedDate(Sort sort);
 
 
 }

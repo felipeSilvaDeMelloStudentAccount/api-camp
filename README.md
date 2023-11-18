@@ -154,6 +154,45 @@ message will be provided. For example:
 }
 ```
 
+### 5. Read All Campsite
+
+**Endpoint:** `GET /campsites/all}`
+
+**Response:**
+
+```json
+[
+  {
+    "id": "6558b07282e7b27a9bde6d3f",
+    "name": "Camp 354 Campsite",
+    "images": [
+      "image1.jpg",
+      "image2.jpg"
+    ],
+    "description": "A beautiful campsite in a serene location.",
+    "rating": 4,
+    "createdDate": null,
+    "addressDetails": {
+      "addressLine1": "123 Main Street",
+      "addressLine2": "Apt 4B",
+      "addressLine3": null,
+      "addressLine4": null,
+      "addressLine5": null,
+      "country": "Example Country",
+      "eirCode": "E12345",
+      "geoLocation": {
+        "latitude": 40,
+        "longitude": -74
+      }
+    },
+    "author": {
+      "username": "Jay Mack",
+      "userId": "655872e1001f711e41f4cc75"
+    }
+  }
+]
+```
+
 ## Query Parameters
 
 ### 1. Search Campsites
