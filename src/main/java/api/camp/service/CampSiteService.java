@@ -51,4 +51,10 @@ public class CampSiteService {
         log.info("getCampsite service");
         return campsiteRepository.findById(id).orElseThrow();
     }
+
+    public ResponseEntity<String> deleteCampsite(String id) {
+        log.info("deleteCampsite service");
+        campsiteRepository.deleteById(id);
+        return ResponseEntity.ok().build();
+    }
 }

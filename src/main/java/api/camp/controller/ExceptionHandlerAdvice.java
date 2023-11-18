@@ -9,7 +9,6 @@ import jakarta.validation.UnexpectedTypeException;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -17,6 +16,9 @@ import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.resource.NoResourceFoundException;
+
+import java.util.NoSuchElementException;
 
 @ControllerAdvice
 @AllArgsConstructor
@@ -24,15 +26,21 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 public class ExceptionHandlerAdvice {
 
 
+    public static final String UNKNOWN = "Unknown";
+
     @ExceptionHandler(Exception.class)
     @ResponseBody
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
     public Error handleGlobalException(Exception ex) {
         log.error("Exception: ", ex);
         if (ex.getCause() == null) {
-            return Error.builder().cause("Unknown").message(ex.getMessage()).build();
+            return buildError(UNKNOWN, ex.getMessage());
         }
-        return Error.builder().cause(ex.getCause().toString()).message(ex.getMessage()).build();
+        return buildError(ex.getCause().toString(), ex.getMessage());
+    }
+
+    private Error buildError(String cause, String message) {
+        return Error.builder().cause(cause).message(message).build();
     }
 
     @ExceptionHandler(UnexpectedTypeException.class)
@@ -40,7 +48,10 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.BAD_REQUEST)
     public Error handleUnexpectedTypeException(UnexpectedTypeException ex) {
         log.error("UnexpectedTypeException: ", ex);
-        return Error.builder().cause(ex.getCause().toString()).message(ex.getMessage()).build();
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
     }
 
     @ExceptionHandler({UsernameNotFoundException.class})
@@ -48,7 +59,10 @@ public class ExceptionHandlerAdvice {
     @ResponseStatus(HttpStatus.NOT_FOUND)
     public Error handleNotFoundException(UsernameNotFoundException ex) {
         log.error("UsernameNotFoundException: ", ex);
-        return Error.builder().cause(ex.getCause().toString()).message(ex.getMessage()).build();
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
     }
 
     @ExceptionHandler(MethodArgumentNotValidException.class)
@@ -69,22 +83,21 @@ public class ExceptionHandlerAdvice {
     public Error handleSignatureException(SignatureException ex) {
         log.error("SignatureException: ", ex);
         // Extract the error message from the first validation error and return the Error.class in the response
-        return Error.builder()
-                .cause(ex.getCause().toString())
-                .message(ex.getMessage())
-                .build();
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
     }
 
     @ExceptionHandler(JsonProcessingException.class)
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ResponseEntity<Error> handleJsonProcessingException(JsonProcessingException ex) {
+    public Error handleJsonProcessingException(JsonProcessingException ex) {
         log.debug("JsonProcessingException: ", ex);
         // Extract the error message from the first validation error and return the Error.class in the response
-        Error error = Error.builder()
-                .cause(ex.getCause().toString())
-                .message(ex.getMessage())
-                .build();
-        return new ResponseEntity<>(error, HttpStatus.INTERNAL_SERVER_ERROR);
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
@@ -92,10 +105,10 @@ public class ExceptionHandlerAdvice {
     public Error handleIllegalArgumentException(IllegalArgumentException ex) {
         log.error("IllegalArgumentException: ", ex);
         // Extract the error message from the first validation error and return the Error.class in the response
-        return Error.builder()
-                .cause(ex.getCause().toString())
-                .message(ex.getMessage())
-                .build();
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
     }
 
     @ExceptionHandler(ExpiredJwtException.class)
@@ -103,9 +116,20 @@ public class ExceptionHandlerAdvice {
     public Error handleExpiredJwtException(ExpiredJwtException ex) {
         log.error("ExpiredJwtException: ", ex);
         // Extract the error message from the first validation error and return the Error.class in the response
-        return Error.builder()
-                .cause(ex.getCause().toString())
-                .message(ex.getMessage())
-                .build();
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
+    }
+
+    @ExceptionHandler({NoSuchElementException.class, NoResourceFoundException.class})
+    @ResponseStatus(HttpStatus.NOT_FOUND)
+    public Error handleNoSuchElementException(NoSuchElementException ex) {
+        log.error("NoSuchElementException: ", ex);
+        // Extract the error message from the first validation error and return the Error.class in the response
+        if (ex.getCause() == null) {
+            return buildError(UNKNOWN, ex.getMessage());
+        }
+        return buildError(ex.getCause().toString(), ex.getMessage());
     }
 }

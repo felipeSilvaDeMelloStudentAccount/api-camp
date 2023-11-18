@@ -3,7 +3,6 @@ package api.camp.controller;
 import api.camp.collection.Campsite;
 import api.camp.model.CampsiteDTO;
 import api.camp.service.CampSiteService;
-import api.camp.service.JwtTokenService;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
@@ -24,7 +23,6 @@ import static api.camp.service.JwtTokenService.validateToken;
 public class CampSiteController {
 
     private CampSiteService campSiteService;
-    private JwtTokenService jwtTokenService;
     private ObjectMapper mapper;
 
 
@@ -62,13 +60,13 @@ public class CampSiteController {
         return null;
     }
 
-    @DeleteMapping("/{campsite}")
+    @DeleteMapping("/{id}")
     public ResponseEntity<String> deleteCamp(
-            @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsite)
+            @RequestHeader("Authorization") String authorizationHeader, @PathVariable String id)
             throws JsonProcessingException {
         log.info("deleteCamp controller");
         validateToken(authorizationHeader);
-        return null;
+        return campSiteService.deleteCampsite(id);
     }
 
 }

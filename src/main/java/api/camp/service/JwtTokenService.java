@@ -6,12 +6,10 @@ import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.SignatureException;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
 import java.util.Date;
 
-@Service
 @Slf4j
 public class JwtTokenService {
 
