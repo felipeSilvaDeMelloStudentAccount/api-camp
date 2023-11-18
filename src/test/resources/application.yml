@@ -7,5 +7,5 @@ spring:
     name: camp-service
   data:
     mongodb:
-      uri: mongodb+srv://serverconnection:XeLNDTdl8tFmC2xa@mflix-jho7e.mongodb.net/test?retryWrites=true&w=majority
-      database: dev
+      uri: ${DBURI:mongodb+srv://serverconnection:<password>@mflix-jho7e.mongodb.net/test?retryWrites=true&w=majority}
+      database: ${DB:dev}
