@@ -1,13 +1,10 @@
 server:
   port: 9002
   servlet:
-    context-path: /camp
-jwt:
-  secret: secret
-  expiration: 3600000 # 1 hour
+    context-path: /api
 spring:
   application:
-    name: user-service
+    name: camp-service
   data:
     mongodb:
       uri: mongodb+srv://serverconnection:XeLNDTdl8tFmC2xa@mflix-jho7e.mongodb.net/test?retryWrites=true&w=majority

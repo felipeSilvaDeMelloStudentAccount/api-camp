@@ -204,8 +204,8 @@ message will be provided. For example:
 - `404 Not Found`: Resource not found.
 - `500 Internal Server Error`: Server-side error.
 
-## Conclusion
+## Running the Application
 
-This API provides a simple and intuitive interface for managing campsites. Ensure proper
-authentication and handle errors gracefully when integrating with this API. Images are expected to
-be provided as base64 encoded strings.
+```bash
+mvn spring-boot:run -Dspring-boot.run.arguments=--DBURI=mongodb+srv://<username>:<password>@camp.s1dnkux.mongodb.net/dev -f pom.xml
+```
