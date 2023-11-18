@@ -1,14 +1,14 @@
 package api.camp.model;
 
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@Builder
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class Address {
-  
+
     private String addressLine1;
     private String addressLine2;
     private String addressLine3;

@@ -31,13 +31,13 @@ public class CampSiteController {
     @PostMapping()
     public ResponseEntity<String> createCamp(
             @RequestHeader("Authorization") String authorizationHeader,
-            @Valid @RequestBody CampsiteDTO campsite) {
+            @Valid @RequestBody CampsiteDTO campsiteDTO) {
         log.info("createCamp controller");
         validateToken(authorizationHeader);
-        return campSiteService.createCamp(campsite);
+        return campSiteService.createCamp(campsiteDTO);
     }
 
-    @GetMapping
+    @GetMapping("/all")
     public List<Campsite> getAllCamps(@RequestHeader("Authorization") String authorizationHeader) {
         log.info("getCamp controller");
         validateToken(authorizationHeader);

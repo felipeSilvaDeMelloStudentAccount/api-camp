@@ -1,17 +1,15 @@
 package api.camp.model;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.*;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
 
 @Getter
-@Builder
 @Setter
-@AllArgsConstructor
-@NoArgsConstructor
+@Builder
 public class Author {
 
     private String username;
-    @JsonIgnore
     private String userId;
 
 }
