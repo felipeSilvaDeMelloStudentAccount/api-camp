@@ -2,14 +2,15 @@ package api.camp.model;
 
 import lombok.Builder;
 import lombok.Getter;
+import lombok.Setter;
 
 @Getter
 @Builder
-public class CampsiteDTO {
+@Setter
+public class CampsiteUpdateDTO {
 
   private String name;
   private String description;
   private int rating;
   private Address addressDetails;
-  private Author author;
 }
