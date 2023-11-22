@@ -14,9 +14,11 @@ http://localhost:9002/api/v1/campsites
 ## Authentication
 
 Authentication is required for all endpoints. Include an API key in the headers of each request:
+
 #### Request Header
 
 - **Authorization** : Bearer Token from login
+
 ```
 Authorization: Bearer YOUR_API_KEY
 ```
@@ -44,10 +46,6 @@ message will be provided. For example:
 ```json
 {
   "name": "Example Campsite",
-  "images": [
-    "image1.jpg",
-    "image2.jpg"
-  ],
   "description": "A beautiful campsite in a serene location.",
   "rating": 4,
   "addressDetails": {
@@ -72,6 +70,7 @@ message will be provided. For example:
 
 **Response:**
 201
+Location Header: v1/campsites/{id}
 
 ### 2. Read Campsite
 
@@ -81,28 +80,31 @@ message will be provided. For example:
 
 ```json
 {
-  "name": "Example Campsite",
-  "images": [
-    "image1.jpg",
-    "image2.jpg"
+  "id": "1",
+  "name": "Gorgeous Campsite",
+  "imageIds": [
+    "image1",
+    "image2"
   ],
-  "description": "A beautiful campsite in a serene location.",
+  "description": "A wonderful campsite with great views.",
   "rating": 4,
+  "createdDate": "2023-11-20T12:30:00",
   "addressDetails": {
-    "addressLine1": "123 Main Street",
-    "addressLine2": "Apt 4B",
+    "addressLine1": "123",
+    "addressLine2": "The green",
     "addressLine3": null,
-    "addressLine4": null,
-    "addressLine5": null,
-    "country": "Example Country",
-    "eirCode": "E12345",
+    "addressLine4": "Mountainville",
+    "addressLine5": "Dublin",
+    "country": "Guessland",
+    "eirCode": "W12345",
     "geoLocation": {
       "latitude": 40.7128,
       "longitude": -74.0060
     }
   },
-  "createdBy": {
-    "username": "john_doe"
+  "author": {
+    "username": "camp_author",
+    "userId": "user123"
   }
 }
 ```
@@ -116,31 +118,14 @@ message will be provided. For example:
 ```json
 {
   "name": "Updated Campsite Name",
-  "images": [
-    "updated_base64_image_1",
-    "updated_base64_image_2"
-  ],
   "description": "Updated Campsite Description",
-  "location": "Updated Campsite GeoLocation",
-  "ratings": 4.8
+  "ratings": 4.8,
+  "addressDetails": "Updated Campsite AddressDetails"
 }
 ```
 
 **Response:**
-
-```json
-{
-  "id": 123,
-  "name": "Updated Campsite Name",
-  "images": [
-    "updated_base64_image_1",
-    "updated_base64_image_2"
-  ],
-  "description": "Updated Campsite Description",
-  "location": "Updated Campsite GeoLocation",
-  "ratings": 4.8
-}
-```
+Response: 200
 
 ### 4. Delete Campsite
 
@@ -154,6 +139,9 @@ message will be provided. For example:
 }
 ```
 
+**Response:**
+Response: 200
+
 ### 5. Read All Campsite
 
 **Endpoint:** `GET /campsites/all}`
@@ -165,9 +153,9 @@ message will be provided. For example:
   {
     "id": "6558b07282e7b27a9bde6d3f",
     "name": "Camp 354 Campsite",
-    "images": [
-      "image1.jpg",
-      "image2.jpg"
+    "imageIds": [
+      "image1",
+      "image2"
     ],
     "description": "A beautiful campsite in a serene location.",
     "rating": 4,
@@ -193,6 +181,45 @@ message will be provided. For example:
 ]
 ```
 
+### 6. Upload Image
+
+**Endpoint:** `POST /campsites/{id}/images`
+
+**Request Body:** multipart/form-data
+file=@/path/to/image.jpg
+
+**Response:**
+Response: 200
+
+### 7. Get Images by Campsite ID
+
+**Endpoint:** `GET /campsites/{id}/images`
+
+**Response:**
+
+```json
+
+[
+  {
+    "id": "image1",
+    "campsiteId": "1",
+    "fileId": "607d1e8f5a2aef001e41ef44"
+  },
+  {
+    "id": "image2",
+    "campsiteId": "1",
+    "fileId": "607d1e995a2aef001e41ef45"
+  }
+]
+
+```
+
+### 8. Delete Image
+
+**Endpoint:** `DELETE /campsites/{id}/images/{imageId}`
+**Response:**
+Response: 200
+
 ## Query Parameters
 
 ### 1. Search Campsites
@@ -211,9 +238,9 @@ message will be provided. For example:
   {
     "id": 123,
     "name": "Campsite Name",
-    "images": [
-      "base64_image_1",
-      "base64_image_2"
+    "imageIds": [
+      "image1",
+      "image2"
     ],
     "description": "Campsite Description",
     "location": "Campsite GeoLocation",

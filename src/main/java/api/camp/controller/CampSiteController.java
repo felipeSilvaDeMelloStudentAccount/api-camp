@@ -1,19 +1,26 @@
 package api.camp.controller;
 
+import static api.camp.service.JwtTokenService.validateToken;
+
 import api.camp.collection.Campsite;
 import api.camp.model.CampsiteDTO;
+import api.camp.model.CampsiteUpdateDTO;
 import api.camp.service.CampSiteService;
-import com.fasterxml.jackson.core.JsonProcessingException;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.validation.Valid;
+import java.util.List;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
-
-import static api.camp.service.JwtTokenService.validateToken;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PatchMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestHeader;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
 @AllArgsConstructor
@@ -22,51 +29,49 @@ import static api.camp.service.JwtTokenService.validateToken;
 @CrossOrigin(origins = "http://localhost:3000")
 public class CampSiteController {
 
-    private CampSiteService campSiteService;
-    private ObjectMapper mapper;
+  private CampSiteService campSiteService;
 
 
-    @PostMapping()
-    public ResponseEntity<String> createCamp(
-            @RequestHeader("Authorization") String authorizationHeader,
-            @Valid @RequestBody CampsiteDTO campsiteDTO) {
-        log.info("createCamp controller");
-        validateToken(authorizationHeader);
-        return campSiteService.createCamp(campsiteDTO);
-    }
+  @PostMapping()
+  public ResponseEntity<String> createCampsite(
+      @RequestHeader("Authorization") String authorizationHeader,
+      @Valid @RequestBody CampsiteDTO campsiteDTO) {
+    log.info("createCamp controller");
+    validateToken(authorizationHeader);
+    return campSiteService.createCamp(campsiteDTO);
+  }
 
-    @GetMapping("/all")
-    public List<Campsite> getAllCamps(@RequestHeader("Authorization") String authorizationHeader) {
-        log.info("getCamp controller");
-        validateToken(authorizationHeader);
-        return campSiteService.getAllCampsites();
-    }
+  @GetMapping("/all")
+  public List<Campsite> getAllCampsites(
+      @RequestHeader("Authorization") String authorizationHeader) {
+    log.info("getCamp controller");
+    validateToken(authorizationHeader);
+    return campSiteService.getAllCampsites();
+  }
 
-    @GetMapping("/{id}")
-    public Campsite getCamp(@RequestHeader("Authorization") String authorizationHeader,
-                            @PathVariable String id) throws JsonProcessingException {
-        log.info("getCamp controller");
-        validateToken(authorizationHeader);
-        return campSiteService.getCampsite(id);
-    }
+  @GetMapping("/{id}")
+  public Campsite getCampsite(@RequestHeader("Authorization") String authorizationHeader,
+      @PathVariable String id) {
+    log.info("getCamp controller");
+    validateToken(authorizationHeader);
+    return campSiteService.getCampsite(id);
+  }
 
 
-    @PatchMapping("/{id}")
-    public ResponseEntity<String> updateCamp(
-            @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsite,
-            @RequestBody CampsiteDTO campsiteDTO) throws JsonProcessingException {
-        log.info("updateCamp controller");
-        validateToken(authorizationHeader);
-        return null;
-    }
+  @PatchMapping("/{id}")
+  public ResponseEntity<String> updateCampsite(
+      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String id,
+      @RequestBody CampsiteUpdateDTO campsiteUpdateDTO) {
+    log.info("updateCamp controller");
+    validateToken(authorizationHeader);
+    return campSiteService.updateCampsite(id, campsiteUpdateDTO);
+  }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<String> deleteCamp(
-            @RequestHeader("Authorization") String authorizationHeader, @PathVariable String id)
-            throws JsonProcessingException {
-        log.info("deleteCamp controller");
-        validateToken(authorizationHeader);
-        return campSiteService.deleteCampsite(id);
-    }
-
+  @DeleteMapping("/{id}")
+  public ResponseEntity<String> deleteCamp(
+      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String id) {
+    log.info("deleteCamp controller");
+    validateToken(authorizationHeader);
+    return campSiteService.deleteCampsite(id);
+  }
 }
