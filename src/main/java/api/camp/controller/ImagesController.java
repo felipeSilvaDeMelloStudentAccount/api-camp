@@ -44,12 +44,9 @@ public class ImagesController {
     }
   }
 
-
   @GetMapping("/{campsiteId}/images")
-  public ResponseEntity<List<Image>> getImages(
-      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsiteId) {
+  public ResponseEntity<List<Image>> getImages(@PathVariable String campsiteId) {
     log.info("getImages controller");
-    validateToken(authorizationHeader);
     List<Image> images = imageService.getImagesByCampsiteId(campsiteId);
     return ResponseEntity.ok(images);
   }
