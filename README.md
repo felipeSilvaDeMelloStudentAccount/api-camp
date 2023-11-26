@@ -13,7 +13,7 @@ http://localhost:9002/api/v1/campsites
 
 ## Authentication
 
-Authentication is required for all endpoints. Include an API key in the headers of each request:
+Authentication is required for most endpoints. Include an API key in the headers of each request:
 
 #### Request Header
 
@@ -40,6 +40,10 @@ message will be provided. For example:
 ### 1. Create Campsite
 
 **Endpoint:** `POST /campsites`
+
+#### Request Header
+
+- **Authorization**: Bearer Token from login
 
 **Request Body:**
 
@@ -113,6 +117,10 @@ Location Header: v1/campsites/{id}
 
 **Endpoint:** `PUT /campsites/{id}`
 
+#### Request Header
+
+- **Authorization**: Bearer Token from login
+
 **Request Body:**
 
 ```json
@@ -131,6 +139,10 @@ Response: 200
 
 **Endpoint:** `DELETE /campsites/{id}`
 
+#### Request Header
+
+- **Authorization**: Bearer Token from login
+
 **Response:**
 
 ```json
@@ -144,7 +156,7 @@ Response: 200
 
 ### 5. Read All Campsite
 
-**Endpoint:** `GET /campsites/all}`
+**Endpoint:** `GET /campsites/all`
 
 **Response:**
 
@@ -185,6 +197,10 @@ Response: 200
 
 **Endpoint:** `POST /campsites/{id}/images`
 
+#### Request Header
+
+- **Authorization**: Bearer Token from login
+
 **Request Body:** multipart/form-data
 file=@/path/to/image.jpg
 
@@ -217,6 +233,11 @@ Response: 200
 ### 8. Delete Image
 
 **Endpoint:** `DELETE /campsites/{id}/images/{imageId}`
+
+#### Request Header
+
+- **Authorization**: Bearer Token from login
+
 **Response:**
 Response: 200
 

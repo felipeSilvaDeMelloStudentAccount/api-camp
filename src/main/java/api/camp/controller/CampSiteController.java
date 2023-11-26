@@ -42,18 +42,14 @@ public class CampSiteController {
   }
 
   @GetMapping("/all")
-  public List<Campsite> getAllCampsites(
-      @RequestHeader("Authorization") String authorizationHeader) {
+  public List<Campsite> getAllCampsites() {
     log.info("getCamp controller");
-    validateToken(authorizationHeader);
     return campSiteService.getAllCampsites();
   }
 
   @GetMapping("/{id}")
-  public Campsite getCampsite(@RequestHeader("Authorization") String authorizationHeader,
-      @PathVariable String id) {
+  public Campsite getCampsite(@PathVariable String id) {
     log.info("getCamp controller");
-    validateToken(authorizationHeader);
     return campSiteService.getCampsite(id);
   }
 
