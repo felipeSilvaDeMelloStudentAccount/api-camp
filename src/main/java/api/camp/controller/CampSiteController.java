@@ -20,6 +20,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @Slf4j
@@ -43,8 +44,17 @@ public class CampSiteController {
 
   @GetMapping("/all")
   public List<Campsite> getAllCampsites() {
-    log.info("getCamp controller");
+    log.info("getAllCampsites controller");
     return campSiteService.getAllCampsites();
+  }
+
+  @GetMapping("/search")
+  public List<Campsite> searchCampsites(@RequestParam String country, @RequestParam String city,
+      @RequestParam String name
+  ) {
+    log.info("searchCampsites controller");
+
+    return campSiteService.searchCampsites(country, city, name);
   }
 
   @GetMapping("/{id}")

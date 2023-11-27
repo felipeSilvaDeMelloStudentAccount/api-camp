@@ -1,5 +1,6 @@
 package api.camp.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -14,6 +15,9 @@ public class Address {
     private String addressLine3;
     private String addressLine4;
     private String addressLine5;
+    @NotNull
+    private String city;
+    @NotNull
     private String country;
     private String eirCode;
     private GeoLocation geoLocation;

@@ -5,6 +5,7 @@ import api.camp.model.Address;
 import api.camp.model.Author;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
 import java.util.List;
 import lombok.Builder;
@@ -23,8 +24,10 @@ public class Campsite {
 
   @Id
   private String id;
+  @NotNull
   private String name;
   private List<String> imageIds;
+  @NotNull
   private String description;
   private int rating;
   @JsonSerialize
