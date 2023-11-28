@@ -52,7 +52,7 @@ message will be provided. For example:
 - **addressDetails**: Required, Object
     - **city**: Required, String, 1-100 characters
     - **country**: Required, String, 1-100 characters
-- **createdBy**: Required, Object
+- **author**: Required, Object
     - **username**: Required, String, 1-100 characters
     - **userId**: Required, String, 1-100 characters
 
@@ -77,7 +77,7 @@ message will be provided. For example:
       "longitude": -74.0060
     }
   },
-  "createdBy": {
+  "author": {
     "username": "john_doe",
     "userId": "123456"
   }
@@ -252,6 +252,91 @@ Response: 200
 
 **Response:**
 Response: 200
+
+### 9. Post Comment
+
+**Endpoint:** `POST /campsites/{campsiteid}/comments`
+
+#### Request Header
+
+- **Authorization**: Bearer Token from login
+
+#### Request Body Validation Mandatory Fields
+
+- **text**: Required, String, 1-1500 characters
+- **author**: Required, Object
+  - **username**: Required, String, 1-100 characters
+  - **userId**: Required, String, 1-100 characters
+
+- **Request Body:**
+
+```json
+{
+  "text": "This is a sample comment.",
+  "author": {
+    "username": "john_doe",
+    "userId": "123456"
+  }
+}
+```
+
+### 10. Get Comments by Campsite ID
+
+**Endpoint:** `GET /campsites/{id}/comments`
+
+**Response:**
+
+```json
+
+[
+  {
+    "id": "comment1",
+    "text": "This is a sample comment.",
+    "author": {
+      "username": "john_doe",
+      "userId": "123456"
+    }
+  },
+  {
+    "id": "comment2",
+    "text": "Another sample comment.",
+    "author": {
+      "username": "jane_doe",
+      "userId": "654321"
+    }
+  }
+]
+```
+
+**Response:**
+Response: 200
+
+```json
+{
+  "message": "Comment posted successfully",
+  "commentId": "your_comment_id_here"
+}
+```
+
+### 11. Delete Comment
+
+**Endpoint:** `DELETE /campsites/{id}/comments/{commentId}`
+
+#### Request Header
+
+- **Authorization**: Bearer Token from login
+
+**Response:**
+Response: 200
+**Response:**
+Response: 200
+
+```json
+{
+  "message": "Comment deleted successfully",
+  "commentId": "your_comment_id_here"
+}
+```
 
 ## Query Parameters
 

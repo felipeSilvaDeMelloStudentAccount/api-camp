@@ -1,8 +1,8 @@
 package api.camp.service;
 
 import api.camp.collection.Campsite;
-import api.camp.model.CampsiteDTO;
-import api.camp.model.CampsiteUpdateDTO;
+import api.camp.model.campsites.CampsiteDTO;
+import api.camp.model.campsites.CampsiteUpdateDTO;
 import api.camp.repository.CampsiteRepository;
 import java.net.URI;
 import java.util.List;

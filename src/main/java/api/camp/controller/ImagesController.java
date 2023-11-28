@@ -24,34 +24,34 @@ import org.springframework.web.multipart.MultipartFile;
 @Slf4j
 @AllArgsConstructor
 @RestController
-@RequestMapping(path = "/v1/campsites", produces = "application/json")
+@RequestMapping(path = "/v1/campsites/{campsiteid}/images", produces = "application/json")
 @CrossOrigin(origins = "http://localhost:3000")
 public class ImagesController {
 
   private ImageService imageService;
 
-  @PostMapping("/{campsiteId}/images")
+  @PostMapping()
   public ResponseEntity<String> uploadImage(
       @RequestHeader("Authorization") String authorizationHeader,
-      @PathVariable String campsiteId, @RequestParam("file") MultipartFile file) {
+      @PathVariable String campsiteid, @RequestParam("file") MultipartFile file) {
     log.info("uploadImage controller");
     validateToken(authorizationHeader);
     try {
-      String fileId = imageService.storeImage(campsiteId, file);
+      String fileId = imageService.storeImage(campsiteid, file);
       return ResponseEntity.ok("Image uploaded with ID: " + fileId);
     } catch (IOException e) {
       return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
     }
   }
 
-  @GetMapping("/{campsiteId}/images")
-  public ResponseEntity<List<Image>> getImages(@PathVariable String campsiteId) {
+  @GetMapping
+  public ResponseEntity<List<Image>> getImages(@PathVariable String campsiteid) {
     log.info("getImages controller");
-    List<Image> images = imageService.getImagesByCampsiteId(campsiteId);
+    List<Image> images = imageService.getImagesByCampsiteId(campsiteid);
     return ResponseEntity.ok(images);
   }
 
-  @DeleteMapping("/images/{imageId}")
+  @DeleteMapping("/{imageId}")
   public ResponseEntity<String> deleteImage(
       @RequestHeader("Authorization") String authorizationHeader, @PathVariable String imageId) {
     log.info("deleteImage controller");

@@ -1,8 +1,8 @@
 package api.camp.collection;
 
 
-import api.camp.model.Address;
-import api.camp.model.Author;
+import api.camp.model.campsites.Address;
+import api.camp.model.campsites.Author;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import jakarta.validation.constraints.NotNull;
