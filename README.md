@@ -45,8 +45,19 @@ message will be provided. For example:
 
 - **Authorization**: Bearer Token from login
 
-**Request Body:**
+#### Request Body Validation Mandatory Fields
 
+- **name**: Required, String, 1-100 characters
+- **rating**: Required, Integer, 1-5
+- **addressDetails**: Required, Object
+    - **city**: Required, String, 1-100 characters
+    - **country**: Required, String, 1-100 characters
+- **createdBy**: Required, Object
+    - **username**: Required, String, 1-100 characters
+    - **userId**: Required, String, 1-100 characters
+
+
+- **Request Body:**
 ```json
 {
   "name": "Example Campsite",
@@ -58,6 +69,7 @@ message will be provided. For example:
     "addressLine3": null,
     "addressLine4": null,
     "addressLine5": null,
+    "city": "Example City",
     "country": "Example Country",
     "eirCode": "E12345",
     "geoLocation": {

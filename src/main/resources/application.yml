@@ -12,7 +12,7 @@ spring:
 logging:
   level:
     root: DEBUG
-    api.user.management: INFO
+    api.api.camp: INFO
     org.springframework.web: INFO
     org.springframework.security: INFO
     org.springframework.data: INFO

@@ -9,8 +9,7 @@ import lombok.Setter;
 @Builder
 public class GeoLocation {
 
-
-    private int latitude;
-    private int longitude;
+  private int latitude;
+  private int longitude;
 
 }
