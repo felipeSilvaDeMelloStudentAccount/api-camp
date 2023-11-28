@@ -53,7 +53,6 @@ public class CampSiteController {
       @RequestParam String name
   ) {
     log.info("searchCampsites controller");
-
     return campSiteService.searchCampsites(country, city, name);
   }
 

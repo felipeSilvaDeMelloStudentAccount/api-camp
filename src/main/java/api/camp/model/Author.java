@@ -1,5 +1,6 @@
 package api.camp.model;
 
+import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -9,7 +10,9 @@ import lombok.Setter;
 @Builder
 public class Author {
 
-    private String username;
-    private String userId;
+  @NotBlank(message = "Username cannot be blank")
+  private String username;
+  @NotBlank(message = "userId cannot be blank")
+  private String userId;
 
 }
