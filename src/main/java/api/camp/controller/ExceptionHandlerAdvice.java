@@ -1,7 +1,7 @@
 package api.camp.controller;
 
 
-import api.camp.model.Error;
+import api.camp.model.campsites.Error;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.SignatureException;

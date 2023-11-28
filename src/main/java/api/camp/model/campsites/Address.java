@@ -1,4 +1,4 @@
-package api.camp.model;
+package api.camp.model.campsites;
 
 import jakarta.validation.constraints.NotBlank;
 import lombok.Builder;

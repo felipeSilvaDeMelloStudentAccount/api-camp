@@ -3,8 +3,8 @@ package api.camp.controller;
 import static api.camp.service.JwtTokenService.validateToken;
 
 import api.camp.collection.Campsite;
-import api.camp.model.CampsiteDTO;
-import api.camp.model.CampsiteUpdateDTO;
+import api.camp.model.campsites.CampsiteDTO;
+import api.camp.model.campsites.CampsiteUpdateDTO;
 import api.camp.service.CampSiteService;
 import jakarta.validation.Valid;
 import java.util.List;

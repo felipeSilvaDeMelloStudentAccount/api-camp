@@ -1,0 +1,27 @@
+package api.camp.collection;
+
+import api.camp.model.campsites.Author;
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import java.time.LocalDateTime;
+import lombok.Builder;
+import lombok.Getter;
+import lombok.Setter;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.mongodb.core.mapping.Document;
+
+@Document(collection = "comments")
+@Getter
+@Setter
+@Builder
+@JsonDeserialize(builder = Comment.CommentBuilder.class)
+@JsonSerialize(as = Comment.class)
+public class Comment {
+
+  @Id
+  private String id;
+  private String campsiteId;
+  private String text;
+  private LocalDateTime createdDate;
+  private Author author;
+}
