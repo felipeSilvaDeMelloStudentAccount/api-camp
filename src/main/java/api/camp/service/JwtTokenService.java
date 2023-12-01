@@ -19,11 +19,9 @@ public class JwtTokenService {
 
     public static void validateToken(String authorizationHeader) throws JwtException {
         log.debug("authorizationHeader : {}", authorizationHeader);
-        //Remove Authorization prefix
-        String jwtToken = authorizationHeader.substring(7);
         try {
-            SignedJWT signedJWT = SignedJWT.parse(jwtToken);
-            JWTClaimsSet claims = signedJWT.getJWTClaimsSet();
+            //Remove Authorization prefix
+            JWTClaimsSet claims = getJwtClaimsSet(authorizationHeader);
             String userId = claims.getSubject();
             // Only allow the user to access their own data
             if (claims.getExpirationTime().before(new Date())) {
@@ -31,8 +29,6 @@ public class JwtTokenService {
                 throw new ExpiredJwtException(null, null,
                         "JWT token expired for user " + userId);
             }
-
-            // Additional validation logic can be added here if needed.
 
         } catch (SignatureException e) {
             log.error("Error parsing JWT token. Signature validation failed. Error message: {}",
@@ -42,5 +38,20 @@ public class JwtTokenService {
             log.error("Error parsing JWT token. Error message: {}", e.getMessage());
             throw new JwtException("Invalid JWT token", e);
         }
+    }
+
+    private static JWTClaimsSet getJwtClaimsSet(String authorizationHeader) throws ParseException {
+        String jwtToken = extractToken(authorizationHeader);
+        SignedJWT signedJWT = SignedJWT.parse(jwtToken);
+        return signedJWT.getJWTClaimsSet();
+    }
+
+    private static String extractToken(String authorizationHeader) {
+        return authorizationHeader.substring(7);
+    }
+
+    public static String getUserId(String authorizationHeader) throws ParseException {
+        JWTClaimsSet claims = getJwtClaimsSet(authorizationHeader);
+        return claims.getSubject();
     }
 }

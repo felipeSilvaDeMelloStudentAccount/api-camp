@@ -12,14 +12,13 @@ import org.hibernate.validator.constraints.Range;
 @Setter
 public class CampsiteDTO {
 
-  @NotBlank(message = "Name cannot be blank")
-  private String name;
+    @NotBlank(message = "Name cannot be blank")
+    private String name;
 
-  private String description;
-  @Range(min = 1, max = 5, message = "Rating must be between 1 and 5")
-  private int rating;
-  @Valid
-  private Address addressDetails;
-  @Valid
-  private Author author;
+    private String description;
+    @Range(min = 1, max = 5, message = "Rating must be between 1 and 5")
+    private int rating;
+    @Valid
+    private Address addressDetails;
+    private Author author;
 }
