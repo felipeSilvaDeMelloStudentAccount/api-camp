@@ -52,12 +52,10 @@ message will be provided. For example:
 - **addressDetails**: Required, Object
     - **city**: Required, String, 1-100 characters
     - **country**: Required, String, 1-100 characters
-- **author**: Required, Object
-    - **username**: Required, String, 1-100 characters
-    - **userId**: Required, String, 1-100 characters
 
 
 - **Request Body:**
+
 ```json
 {
   "name": "Example Campsite",
@@ -76,10 +74,6 @@ message will be provided. For example:
       "latitude": 40.7128,
       "longitude": -74.0060
     }
-  },
-  "author": {
-    "username": "john_doe",
-    "userId": "123456"
   }
 }
 ```
@@ -98,10 +92,6 @@ Location Header: v1/campsites/{id}
 {
   "id": "1",
   "name": "Gorgeous Campsite",
-  "imageIds": [
-    "image1",
-    "image2"
-  ],
   "description": "A wonderful campsite with great views.",
   "rating": 4,
   "createdDate": "2023-11-20T12:30:00",
@@ -177,10 +167,6 @@ Response: 200
   {
     "id": "6558b07282e7b27a9bde6d3f",
     "name": "Camp 354 Campsite",
-    "imageIds": [
-      "image1",
-      "image2"
-    ],
     "description": "A beautiful campsite in a serene location.",
     "rating": 4,
     "createdDate": null,
@@ -231,12 +217,14 @@ Response: 200
   {
     "id": "image1",
     "campsiteId": "1",
-    "fileId": "607d1e8f5a2aef001e41ef44"
+    "fileId": "607d1e8f5a2aef001e41ef44",
+    "base64Image": "/9j/4AAQSkZJRgABAQEAYABgAAD/4TDKRXhpZgAATU0AKgAAAAgABAExAAIAAAALAAAQSodpAAQAAAABAAAQVoglAAQAAAABAAAgouocAAcAABAMAAAAPgAAAAAc6gAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   },
   {
     "id": "image2",
     "campsiteId": "1",
-    "fileId": "607d1e995a2aef001e41ef45"
+    "fileId": "607d1e995a2aef001e41ef45",
+    "base64Image": "/9j/4AAQSkZJRgABAQEAYABgAAD/4TDKRXhpZgAATU0AKgAAAAgABAExAAIAAAALAAAQSodpAAQAAAABAAAQVoglAAQAAAABAAAgouocAAcAABAMAAAAPgAAAAAc6gAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   }
 ]
 
@@ -264,9 +252,6 @@ Response: 200
 #### Request Body Validation Mandatory Fields
 
 - **text**: Required, String, 1-1500 characters
-- **author**: Required, Object
-  - **username**: Required, String, 1-100 characters
-  - **userId**: Required, String, 1-100 characters
 
 - **Request Body:**
 

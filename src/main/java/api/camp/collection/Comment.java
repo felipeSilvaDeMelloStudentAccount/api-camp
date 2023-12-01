@@ -1,8 +1,6 @@
 package api.camp.collection;
 
 import api.camp.model.campsites.Author;
-import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
-import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import java.time.LocalDateTime;
 import lombok.Builder;
 import lombok.Getter;
@@ -14,8 +12,6 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @Builder
-@JsonDeserialize(builder = Comment.CommentBuilder.class)
-@JsonSerialize(as = Comment.class)
 public class Comment {
 
   @Id

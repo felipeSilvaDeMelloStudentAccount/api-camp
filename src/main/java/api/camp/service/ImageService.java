@@ -1,12 +1,10 @@
 package api.camp.service;
 
-import api.camp.collection.Campsite;
 import api.camp.collection.Image;
-import api.camp.repository.CampsiteRepository;
 import api.camp.repository.ImageRepository;
 import java.io.IOException;
+import java.util.Base64;
 import java.util.List;
-import java.util.Optional;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.bson.types.ObjectId;
@@ -22,29 +20,25 @@ import org.springframework.web.multipart.MultipartFile;
 public class ImageService {
 
 
-  private ImageRepository imageRepository;
-  private CampsiteRepository campsiteRepository;
-
-
-  private GridFsTemplate gridFsTemplate;
+  private final ImageRepository imageRepository;
+  private final GridFsTemplate gridFsTemplate;
 
   public String storeImage(String campsiteId, MultipartFile file) throws IOException {
     // Store the image using GridFS
     ObjectId fileId = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(),
         file.getContentType());
+
+    // Convert the image content to Base64
+    String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+
     // Save metadata in the Image collection
-    Image image = new Image();
-    image.setCampsiteId(campsiteId);
-    image.setFileId(fileId.toString());
+    Image image = Image.builder()
+        .campsiteId(campsiteId)
+        .fileId(fileId.toString())
+        .base64Image(base64Image)
+        .build();
     imageRepository.save(image);
 
-    //Update Campsite with the new image ID
-    Optional<Campsite> campsite = campsiteRepository.findById(campsiteId);
-    if (campsite.isPresent()) {
-      Campsite campsiteToUpdate = campsite.get();
-      campsiteToUpdate.getImageIds().add(fileId.toString());
-      campsiteRepository.save(campsiteToUpdate);
-    }
     return fileId.toString();
   }
 
@@ -58,4 +52,9 @@ public class ImageService {
     gridFsTemplate.delete(new Query(Criteria.where("_id").is(new ObjectId(imageId))));
     imageRepository.deleteById(imageId);
   }
+
+  public void deleteAllImages() {
+    imageRepository.deleteAll();
+  }
+
 }

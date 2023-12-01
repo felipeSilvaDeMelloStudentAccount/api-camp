@@ -21,4 +21,5 @@ public class Image {
   private String campsiteId;
   //GridFS ID of stored image
   private String fileId;
+  private String base64Image;
 }
