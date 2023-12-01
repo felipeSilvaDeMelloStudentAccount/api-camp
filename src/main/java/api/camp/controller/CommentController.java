@@ -1,10 +1,13 @@
 package api.camp.controller;
 
+import static api.camp.service.JwtTokenService.getUserId;
+import static api.camp.service.JwtTokenService.getUsername;
 import static api.camp.service.JwtTokenService.validateToken;
 
 import api.camp.collection.Comment;
 import api.camp.model.comments.CommentDTO;
 import api.camp.service.CommentService;
+import java.text.ParseException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -32,10 +35,14 @@ public class CommentController {
   @PostMapping
   public Map<String, String> postComment(
       @RequestHeader("Authorization") String authorizationHeader,
-      @PathVariable String campsiteid, @RequestBody CommentDTO commentDTO) {
+      @PathVariable String campsiteid, @RequestBody CommentDTO commentDTO) throws ParseException {
     log.info("postComment controller");
     validateToken(authorizationHeader);
-    String commentId = commentService.postComment(campsiteid, commentDTO);
+    String userId = getUserId(authorizationHeader);
+    String userName = getUsername(authorizationHeader);
+    log.info("Controller Validation userId: {}, userName: {}, campsiteId: {}", userId, userName,
+        campsiteid);
+    String commentId = commentService.postComment(userId, userName, campsiteid, commentDTO);
     Map<String, String> response = new HashMap<>();
     response.put("message", "Comment posted successfully");
     response.put("commentId", commentId);

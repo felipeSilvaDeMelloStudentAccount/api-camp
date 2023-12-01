@@ -11,7 +11,7 @@ import lombok.Setter;
 public class Author {
 
   @NotBlank(message = "Username cannot be blank")
-  private String username;
+  private String userName;
   @NotBlank(message = "userId cannot be blank")
   private String userId;
 

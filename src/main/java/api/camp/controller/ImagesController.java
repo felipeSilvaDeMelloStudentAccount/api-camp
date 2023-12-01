@@ -45,7 +45,8 @@ public class ImagesController {
   }
 
   @GetMapping
-  public ResponseEntity<List<Image>> getImages(@PathVariable String campsiteid) {
+  public ResponseEntity<List<Image>> getImages(@PathVariable String campsiteid)
+      throws IOException {
     log.info("getImages controller");
     List<Image> images = imageService.getImagesByCampsiteId(campsiteid);
     return ResponseEntity.ok(images);
@@ -57,6 +58,15 @@ public class ImagesController {
     log.info("deleteImage controller");
     validateToken(authorizationHeader);
     imageService.deleteImage(imageId);
+    return ResponseEntity.ok("Image deleted successfully");
+  }
+
+  @DeleteMapping("/all")
+  public ResponseEntity<String> deleteImage(
+      @RequestHeader("Authorization") String authorizationHeader) {
+    log.info("deleteImage controller");
+    validateToken(authorizationHeader);
+    imageService.deleteAllImages();
     return ResponseEntity.ok("Image deleted successfully");
   }
 
