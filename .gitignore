@@ -1,0 +1,9 @@
+
+target/campsite-0.0.1-SNAPSHOT.jar
+*.original
+*.class
+*.yml
+*.properties
+*.lst
+*.txt
+*.xml
