@@ -3,6 +3,7 @@ package api.camp.collection;
 
 import api.camp.model.campsites.Address;
 import api.camp.model.campsites.Author;
+import com.fasterxml.jackson.annotation.JsonInclude;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotNull;
 import java.time.LocalDateTime;
@@ -16,6 +17,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Getter
 @Setter
 @Builder
+@JsonInclude(JsonInclude.Include.NON_NULL)
 public class Campsite {
 
   @Id
