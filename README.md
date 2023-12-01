@@ -338,46 +338,6 @@ Response: 200
 }
 ```
 
-## Query Parameters
-
-### 1. Search Campsites
-
-**Endpoint:** `GET /campsites/search`
-
-**Query Parameters:**
-
-- `name` (optional): Search by campsite name.
-- `location` (optional): Search by campsite location.
-
-**Response:**
-
-```json
-[
-  {
-    "id": 123,
-    "name": "Campsite Name",
-    "imageIds": [
-      "image1",
-      "image2"
-    ],
-    "description": "Campsite Description",
-    "location": "Campsite GeoLocation",
-    "ratings": 4.5
-  },
-  {
-    "id": 124,
-    "name": "Another Campsite",
-    "images": [
-      "other_base64_image_1",
-      "other_base64_image_2"
-    ],
-    "description": "Another Campsite Description",
-    "location": "Different GeoLocation",
-    "ratings": 4.2
-  }
-]
-```
-
 ## Status Codes
 
 - `200 OK`: Successful GET request.
