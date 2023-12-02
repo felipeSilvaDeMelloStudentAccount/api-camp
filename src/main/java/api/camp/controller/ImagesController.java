@@ -5,7 +5,9 @@ import static api.camp.service.JwtTokenService.validateToken;
 import api.camp.collection.Image;
 import api.camp.service.ImageService;
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -31,16 +33,20 @@ public class ImagesController {
   private ImageService imageService;
 
   @PostMapping()
-  public ResponseEntity<String> uploadImage(
+  public ResponseEntity<Map<String, String>> uploadImage(
       @RequestHeader("Authorization") String authorizationHeader,
       @PathVariable String campsiteid, @RequestParam("file") MultipartFile file) {
     log.info("uploadImage controller");
     validateToken(authorizationHeader);
+    Map<String, String> response = new HashMap<>();
     try {
       String fileId = imageService.storeImage(campsiteid, file);
-      return ResponseEntity.ok("Image uploaded with ID: " + fileId);
+      response.put("imageId", fileId);
+      return ResponseEntity.ok(response);
     } catch (IOException e) {
-      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Failed to upload image");
+      response.put("error", "Failed to upload image");
+      response.put("message", e.getMessage());
+      return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
     }
   }
 
@@ -53,21 +59,26 @@ public class ImagesController {
   }
 
   @DeleteMapping("/{imageId}")
-  public ResponseEntity<String> deleteImage(
-      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String imageId) {
+  public ResponseEntity<Map<String, String>> deleteImage(
+      @RequestHeader("Authorization") String authorizationHeader, @PathVariable String campsiteid,
+      @PathVariable String imageId) {
     log.info("deleteImage controller");
     validateToken(authorizationHeader);
     imageService.deleteImage(imageId);
-    return ResponseEntity.ok("Image deleted successfully");
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Image deleted successfully");
+    return ResponseEntity.ok(response);
   }
 
   @DeleteMapping("/all")
-  public ResponseEntity<String> deleteImage(
+  public ResponseEntity<Map<String, String>> deleteImages(
       @RequestHeader("Authorization") String authorizationHeader) {
     log.info("deleteImage controller");
     validateToken(authorizationHeader);
     imageService.deleteAllImages();
-    return ResponseEntity.ok("Image deleted successfully");
+    Map<String, String> response = new HashMap<>();
+    response.put("message", "Image deleted successfully");
+    return ResponseEntity.ok(response);
   }
 
 }
