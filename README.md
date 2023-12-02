@@ -117,7 +117,7 @@ Location Header: v1/campsites/{id}
 
 ### 3. Update Campsite
 
-**Endpoint:** `PUT /campsites/{id}`
+**Endpoint:** `PATCH /campsites/{id}`
 
 #### Request Header
 
