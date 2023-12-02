@@ -25,21 +25,28 @@ public class ImageService {
 
   public String storeImage(String campsiteId, MultipartFile file) throws IOException {
     // Store the image using GridFS
-    ObjectId fileId = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(),
-        file.getContentType());
+    try {
+      ObjectId fileId = gridFsTemplate.store(file.getInputStream(), file.getOriginalFilename(),
+          file.getContentType());
+      // Convert the image content to Base64
 
-    // Convert the image content to Base64
-    String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
+      String base64Image = Base64.getEncoder().encodeToString(file.getBytes());
 
-    // Save metadata in the Image collection
-    Image image = Image.builder()
-        .campsiteId(campsiteId)
-        .fileId(fileId.toString())
-        .base64Image(base64Image)
-        .build();
-    imageRepository.save(image);
+      // Save metadata in the Image collection
+      Image image = Image.builder()
+          .campsiteId(campsiteId)
+          .fileId(fileId.toString())
+          .base64Image(base64Image)
+          .build();
+      imageRepository.save(image);
 
-    return fileId.toString();
+      return fileId.toString();
+    } catch (IOException e) {
+      log.error("Failed to store image in GridFS");
+      throw e;
+    }
+
+
   }
 
   public List<Image> getImagesByCampsiteId(String campsiteId) {

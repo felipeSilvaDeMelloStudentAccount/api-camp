@@ -205,6 +205,12 @@ file=@/path/to/image.jpg
 **Response:**
 Response: 200
 
+```json
+{
+  "imageId": "your_image_id_here"
+}
+```
+
 ### 7. Get Images by Campsite ID
 
 **Endpoint:** `GET /campsites/{id}/images`
@@ -240,6 +246,12 @@ Response: 200
 
 **Response:**
 Response: 200
+
+```json
+{
+  "message": "Image deleted successfully"
+}
+```
 
 ### 9. Post Comment
 
